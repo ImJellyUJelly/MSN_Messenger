@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class LoginView extends Application {
     private Label lbUsername;
     private Label lbPassword;
     private TextField tfUsername;
@@ -71,6 +71,8 @@ public class Main extends Application {
                 if (tfPassword.getText() != null && !tfPassword.getText().isEmpty()) {
                     System.out.println(username);
                     System.out.println(password);
+                    MSNView view = new MSNView();
+                    view.start(new Stage());
                 } else {
                     throw new Exception("Use a valid username and/or password.");
                 }
