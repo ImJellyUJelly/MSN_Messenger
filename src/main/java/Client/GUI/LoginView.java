@@ -1,5 +1,7 @@
 package Client.GUI;
 
+import Client.App;
+import Client.DAL.SqlUser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -8,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 
 public class LoginView extends Application {
     private Label lbUsername;
@@ -69,9 +73,12 @@ public class LoginView extends Application {
             password = tfPassword.getText();
             if (tfUsername.getText() != null && !tfUsername.getText().isEmpty()) {
                 if (tfPassword.getText() != null && !tfPassword.getText().isEmpty()) {
-                    System.out.println(username);
-                    System.out.println(password);
+                    App app = new App();
+                    app.login(username, password);
+
                     MSNView view = new MSNView();
+                    view.setApp(app);
+
                     view.start(new Stage());
                 } else {
                     throw new Exception("Use a valid username and/or password.");
@@ -79,6 +86,8 @@ public class LoginView extends Application {
             } else {
                 throw new Exception("Use a valid username and/or password.");
             }
+        } catch(SQLException sex) {
+            showAlert(sex);
         } catch (Exception ex) {
             showAlert(ex);
         }
