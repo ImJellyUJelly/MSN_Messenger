@@ -21,7 +21,7 @@ public class LoginView extends Application {
     private Button btLogin;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -42,6 +42,7 @@ public class LoginView extends Application {
             public void handle(ActionEvent event) {
                 try {
                     btLogin_Click(event);
+                    primaryStage.close();
                 } catch (Exception ex) {
                     showAlert(ex);
                 }
