@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,15 @@ public class User implements IUser {
     private StatusType status;
     private Image profilePicture;
 
-    private Socket socket;
-    private String hostIP;
-    private int port;
-
     private List<User> friendList;
+
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("127.0.0.1", 4567);
+        //socket.connect();
+    }
 
     public User() throws IOException {
         friendList = new ArrayList<>();
-        socket = new Socket();
-        socket.connect(new InetSocketAddress(hostIP, port));
     }
 
     public User(int id, String name, String emailAddress, String password, String personalMessage, StatusType status) {

@@ -106,6 +106,7 @@ public class MSNView extends Application {
 
     private void bt_OpenChat(MouseEvent event) {
         ChatView view = new ChatView();
+        view.setApp(app);
         view.start(new Stage());
     }
 

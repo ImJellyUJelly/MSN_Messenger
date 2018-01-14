@@ -1,17 +1,15 @@
 package Server;
 
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 import java.io.*;
 
 public class Server extends Thread {
-    private ServerSocket serverSocket;
-    private Scanner scanner;
-    private int portNr;
-
-    public Server() throws IOException {
-        scanner = new Scanner(System.in);
-        serverSocket = new ServerSocket(portNr);
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(4567);
+        Socket client = serverSocket.accept();
 
     }
+
 }
