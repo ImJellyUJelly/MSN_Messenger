@@ -1,7 +1,7 @@
 package Client.GUI;
 
+import Server.Server;
 import Client.App;
-import Client.DAL.SqlUser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.SQLException;
 
 public class LoginView extends Application {
@@ -26,6 +28,8 @@ public class LoginView extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Server server = new Server();
 
         // Make de grid lines visible
         // grid.setGridLinesVisible(true);
@@ -55,6 +59,14 @@ public class LoginView extends Application {
         grid.add(lbPassword, 14, 27, 4, 1);
         grid.add(tfPassword, 18, 27, 25, 1);
         grid.add(btLogin, 41, 29, 1, 1);
+
+        Socket socket = null;
+        int portNumber = 4567;
+        try {
+            socket = new Socket("127.0.0.1", portNumber);
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
 
         Group root = new Group();
         Scene scene = new Scene(root, 750, 600);

@@ -1,12 +1,13 @@
 package Client.Business;
 
 import Client.Business.Enums.StatusType;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +23,32 @@ public class User implements IUser {
     private List<User> friendList;
 
     public static void main(String[] args) throws IOException {
-        Socket socket = new Socket("127.0.0.1", 4567);
-        //socket.connect();
+        User user = new User(0, "Jelle Schräder", "jelleschrader@killerapp.fontys", "Hoi", StatusType.Online);
+        user.start(user.getName());
     }
 
-    public User() throws IOException {
+    public void start(String name) throws IOException {
+        Socket socket;
+
+        socket = new Socket("127.0.0.1", 4567);
+
+        OutputStream out = socket.getOutputStream();
+        out.write(("Hello, I'm " + name).getBytes());
+
+        InputStream inputStream = socket.getInputStream();
+
+        byte[] buffer = new byte[512];
+        while (true) {
+            inputStream.read(buffer);
+            System.out.println(new String(buffer));
+        }
+    }
+
+    public User() {
         friendList = new ArrayList<>();
     }
 
-    public User(int id, String name, String emailAddress, String password, String personalMessage, StatusType status) {
+    public User(int id, String name, String emailAddress, String password, String personalMessage, StatusType status) throws IOException {
         this.id = id;
         this.name = name;
         this.emailAddress = emailAddress;
@@ -118,7 +136,7 @@ public class User implements IUser {
         return friendList;
     }
 
-    public void sendMessage(Message message) {
+    public void sendMessage(String message) {
 
     }
 

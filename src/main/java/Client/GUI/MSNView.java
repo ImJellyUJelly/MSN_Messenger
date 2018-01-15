@@ -4,7 +4,6 @@ import Client.App;
 import Client.Business.Enums.StatusType;
 import Client.Business.IUser;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -98,6 +97,7 @@ public class MSNView extends Application {
         for(IUser user : app.getUser().getFriendList()) {
             if(user.getStatus() == StatusType.Online || user.getStatus() == StatusType.Busy || user.getStatus() == StatusType.Away) {
                 friendListOnline.getItems().add(user);
+
             } else {
                 friendListOffline.getItems().add(user);
             }
@@ -107,6 +107,8 @@ public class MSNView extends Application {
     private void bt_OpenChat(MouseEvent event) {
         ChatView view = new ChatView();
         view.setApp(app);
+        //view.setReceiver();
+        view.setSender(app.getUser());
         view.start(new Stage());
     }
 

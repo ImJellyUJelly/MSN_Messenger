@@ -1,6 +1,7 @@
 package Client.GUI;
 
 import Client.App;
+import Client.Business.User;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -8,20 +9,22 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import sun.invoke.empty.Empty;
 
-import javax.swing.*;
+import java.io.IOException;
 
 public class ChatView extends Application {
     private Button btSend;
-    private TextField tfMessages;
+    private TextArea tfMessages;
     private TextField tfMessage;
 
     private App app;
+
+    private User sender;
+    private User receiver;
 
     @Override
     public void start(Stage primaryStage) {
@@ -30,7 +33,7 @@ public class ChatView extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        tfMessages = new TextField();
+        tfMessages = new TextArea();
         tfMessages.setPrefHeight(300);
         tfMessages.setPrefWidth(500);
         tfMessage = new TextField();
@@ -63,9 +66,14 @@ public class ChatView extends Application {
         primaryStage.show();
     }
 
-    private void btSend_Click(ActionEvent event) {
+    private void btSend_Click(ActionEvent event) throws IOException {
+        sender.sendMessage(tfMessage.getText());
+
+
         if(tfMessage.getText() != "") {
-            tfMessages.setText(tfMessages.getText() + "/n" + app.getUser().getName() + ": " + tfMessage.getText());
+            String text = tfMessages.getText() + System.lineSeparator() + app.getUser().getName() + ": " + tfMessage.getText();
+            tfMessages.setText(text);
+            tfMessage.setText("");
         }
     }
 
@@ -79,6 +87,13 @@ public class ChatView extends Application {
         this.app = app;
     }
 
+    public void setReceiver(User user) {
+        receiver = user;
+    }
+
+    public void setSender(User user) {
+        sender = user;
+    }
 
     public static void main(String[] args) {
         launch(args);
